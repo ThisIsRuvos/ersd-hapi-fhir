@@ -46,8 +46,6 @@ readinessProbe:
   initialDelaySeconds: 5
   timeoutSeconds: 3
   scheme: "HTTP"
-mysql:
-  enabled: true
 resources:
 #  limits:
 #    cpu: 100m
