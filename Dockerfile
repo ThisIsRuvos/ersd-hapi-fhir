@@ -15,13 +15,13 @@ RUN export PATH=/tmp/apache-maven-3.6.0/bin:${PATH}
 RUN git clone https://github.com/hapifhir/hapi-fhir-jpaserver-starter
 
 WORKDIR /tmp/hapi-fhir-jpaserver-starter/src/main/resources
-RUN sed -i '/server_address/c\server_address=http://hapi:8080/hapi-fhir-jpaserver/fhir/' hapi.properties && \
-	sed -i '/datasource.driver/c\datasource.driver=com.mysql.cj.jdbc.Driver' hapi.properties && \
-	sed -i '/datasource.url/c\datasource.url=jdbc:mysql://db:3306/hapi_dstu3?useSSL=false&serverTimezone=UTC' hapi.properties && \
+RUN sed -i '/server_address/c\server_address=http://kds-hapi-fhir:8080/hapi-fhir-jpaserver/fhir/' hapi.properties && \
+	# sed -i '/datasource.driver/c\datasource.driver=com.mysql.cj.jdbc.Driver' hapi.properties && \
+	# sed -i '/datasource.url/c\datasource.url=jdbc:mysql://db:3306/hapi_dstu3?useSSL=false&serverTimezone=UTC' hapi.properties && \
 	sed -i '/datasource.username/c\datasource.username=hapi_user' hapi.properties && \
 	sed -i '/datasource.password/c\datasource.password=S3cretP8ss' hapi.properties && \
 	sed -i '/server.name/c\server.name=HAPI DSTU3' hapi.properties && \
-	sed -i '/hibernate.dialect/c\hibernate.dialect=org.hibernate.dialect.MySQL5Dialect' hapi.properties && \
+	# sed -i '/hibernate.dialect/c\hibernate.dialect=org.hibernate.dialect.MySQL5Dialect' hapi.properties && \
 	sed -i '/hibernate.search.default.indexBase/c\hibernate.search.default.indexBase=/data/hapi_dstu3/lucenefiles' hapi.properties && \
 	sed -i '/subscription.resthook/c\subscription.resthook.enabled=true' hapi.properties && \
 	sed -i '/subscription.email.enabled/c\subscription.email.enabled=true' hapi.properties && \
