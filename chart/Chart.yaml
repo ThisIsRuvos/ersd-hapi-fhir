@@ -1,5 +1,0 @@
-apiVersion: v1
-description: KDDS HAPI FHIR
-name: kds-hapi-fhir
-version: 0.2.9
-icon: https://gitlab.com/gitlab-com/gitlab-artwork/raw/master/logo/logo-square.png

@@ -12,10 +12,17 @@ RUN wget https://www-eu.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-mave
 RUN tar xzf apache-maven-3.6.0-bin.tar.gz
 RUN export PATH=/tmp/apache-maven-3.6.0/bin:${PATH}
 
+# Fetch and build forked and fixed jpaserver-base
+RUN git clone https://github.com/lantanagroup/hapi-fhir.git
+WORKDIR /tmp/hapi-fhir/hapi-fhir-jpaserver-base
+RUN git checkout 3.8-subscription-payload
+RUN mvn clean install package -DskipTests
+
+WORKDIR /tmp
 RUN git clone https://github.com/hapifhir/hapi-fhir-jpaserver-starter
 
 WORKDIR /tmp/hapi-fhir-jpaserver-starter/src/main/resources
-RUN sed -i '/server_address/c\server_address=http://kds-hapi-fhir:8080/hapi-fhir-jpaserver/fhir/' hapi.properties && \
+RUN sed -i '/server_address/c\server_address=http://kds-hapi-fhir/hapi-fhir-jpaserver/fhir' hapi.properties && \
 	# sed -i '/datasource.driver/c\datasource.driver=com.mysql.cj.jdbc.Driver' hapi.properties && \
 	# sed -i '/datasource.url/c\datasource.url=jdbc:mysql://db:3306/hapi_dstu3?useSSL=false&serverTimezone=UTC' hapi.properties && \
 	sed -i '/datasource.username/c\datasource.username=hapi_user' hapi.properties && \
@@ -26,12 +33,14 @@ RUN sed -i '/server_address/c\server_address=http://kds-hapi-fhir:8080/hapi-fhir
 	sed -i '/subscription.resthook/c\subscription.resthook.enabled=true' hapi.properties && \
 	sed -i '/subscription.email.enabled/c\subscription.email.enabled=true' hapi.properties && \
 	sed -i '/email.enabled/c\email.enabled=true' hapi.properties && \
-	sed -i '/email.from/c\email.from=hapi@aphl-hapi.com' hapi.properties && \
-	sed -i '/email.host/c\email.host=apollo.lantanagroup.com' hapi.properties && \
-	sed -i '/email.port/c\email.port=25' hapi.properties
+	sed -i '/email.from/c\email.from=sandboxsupport@aimsplatform.com' hapi.properties && \
+	sed -i '/email.host/c\email.host=aws-smtp-relay' hapi.properties && \
+	sed -i '/email.port/c\email.port=10025' hapi.properties
 
 WORKDIR /tmp/hapi-fhir-jpaserver-starter
 RUN mvn clean install -DskipTests
+RUN mvn install:install-file -Dfile=/tmp/hapi-fhir/hapi-fhir-jpaserver-base/target/hapi-fhir-jpaserver-base-3.8.0.jar -DskipTests
+RUN mvn package
 
 FROM tomcat:9-jre8
 
