@@ -30,6 +30,9 @@ RUN mvn install -DskipTests
 
 FROM tomcat:9-jre8
 
+RUN apt-get update && \
+	apt-get install zip
+
 RUN mkdir -p /data/hapi_dstu3/lucenefiles && chmod 775 /data/hapi_dstu3/lucenefiles
 COPY --from=build-hapi /tmp/hapi-fhir-jpaserver-starter/target/*.war /usr/local/tomcat/webapps/
 COPY tomcat-users.xml /usr/local/tomcat/conf/
@@ -38,4 +41,4 @@ RUN sed -i '/allow=/c\allow="\\d+\\.\\d+\\.\\d+\\.\\d+" />' /usr/local/tomcat/we
 
 EXPOSE 8080
 
-CMD ["run.sh"]
+CMD ["./run.sh"]
