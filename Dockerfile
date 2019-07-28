@@ -23,8 +23,6 @@ RUN mvn install -DskipTests
 WORKDIR /tmp
 RUN git clone https://github.com/hapifhir/hapi-fhir-jpaserver-starter
 
-COPY hapi.properties /tmp/hapi-fhir-jpaserver-starter/src/main/resources
-
 WORKDIR /tmp/hapi-fhir-jpaserver-starter
 RUN mvn install:install-file -Dfile=/tmp/hapi-fhir/hapi-fhir-jpaserver-subscription/target/hapi-fhir-jpaserver-subscription-3.8.0.jar -DskipTests
 RUN mvn install:install-file -Dfile=/tmp/hapi-fhir/hapi-fhir-jpaserver-base/target/hapi-fhir-jpaserver-base-3.8.0.jar -DskipTests
@@ -35,8 +33,9 @@ FROM tomcat:9-jre8
 RUN mkdir -p /data/hapi_dstu3/lucenefiles && chmod 775 /data/hapi_dstu3/lucenefiles
 COPY --from=build-hapi /tmp/hapi-fhir-jpaserver-starter/target/*.war /usr/local/tomcat/webapps/
 COPY tomcat-users.xml /usr/local/tomcat/conf/
+COPY run.sh ./
 RUN sed -i '/allow=/c\allow="\\d+\\.\\d+\\.\\d+\\.\\d+" />' /usr/local/tomcat/webapps/manager/META-INF/context.xml
 
 EXPOSE 8080
 
-CMD ["catalina.sh", "run"]
+CMD ["run.sh"]
