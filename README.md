@@ -18,7 +18,7 @@ docker build -t registry.ruvos.com/ersd/ersd-hapi-fhir .
 # login if necessary
 docker login registry.ruvos.com
 # or with credentials inline
-docker login -u <USERNAME> -p <PASSWORD> registry.ruvos.com
+docker login -u <USERNAME> -p <GITLAB_PERSONAL_ACCESS_TOKEN> registry.ruvos.com
 
 docker push registry.ruvos.com/ersd/ersd-hapi-fhir
 ```
@@ -28,7 +28,7 @@ docker push registry.ruvos.com/ersd/ersd-hapi-fhir
 # login if necessary
 docker login registry.ruvos.com
 # or with credentials inline
-docker login -u <USERNAME> -p <PASSWORD> registry.ruvos.com
+docker login -u <USERNAME> -p <GITLAB_PERSONAL_ACCESS_TOKEN> registry.ruvos.com
 
 docker pull registry.ruvos.com/ersd/ersd-hapi-fhir
 ```
