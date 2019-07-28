@@ -7,7 +7,7 @@ unzip webapps/hapi-fhir-jpaserver.war WEB-INF/classes/hapi.properties
 SERVER_ADDRESS=${SERVER_ADDRESS:-'http://ersd-hapi-fhir:8080/hapi-fhir-jpaserver/fhir'}
 SERVER_NAME=${SERVER_NAME:-'HAPI_DSTU3'}
 DATASOURCE_DRIVER=${DATASOURCE_DRIVER:-'com.mysql.cj.jdbc.Driver'}
-DATASOURCE_URL=${DATASOURCE_URL:-'jdbc:mysql://db:3306/hapi_dstu3?useSSL=false&serverTimezone=UTC'}
+DATASOURCE_URL=${DATASOURCE_URL:-'jdbc:mysql://db:3306/hapi_dstu3'}
 HIBERNATE_DIALECT=${HIBERNATE_DIALECT:-'org.hibernate.dialect.MySQL5Dialect'}
 HIBERNATE_INDEX_BASE=${HIBERNATE_INDEX_BASE:-'/data/hapi_dstu3/lucenefiles'}
 RESTHOOK_ENABLED=${RESTHOOK_ENABLED:-'true'}
