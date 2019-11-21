@@ -8,24 +8,20 @@ RUN apt-get update && \
 	apt-get install wget -y && \
     apt-get install openjdk-8-jdk -y
 
-RUN wget https://www-eu.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
+RUN wget https://archive.apache.org/dist/maven/maven-3/3.6.0/binaries/apache-maven-3.6.0-bin.tar.gz
 RUN tar xzf apache-maven-3.6.0-bin.tar.gz
 RUN export PATH=/tmp/apache-maven-3.6.0/bin:${PATH}
 
 # Fetch and build forked and fixed jpaserver-base
 RUN git clone https://github.com/lantanagroup/hapi-fhir.git
-WORKDIR /tmp/hapi-fhir/hapi-fhir-jpaserver-subscription
-RUN git checkout 3.8-subscription-payload
-RUN mvn install -DskipTests
-WORKDIR /tmp/hapi-fhir/hapi-fhir-jpaserver-base
+WORKDIR /tmp/hapi-fhir
+RUN git checkout email-subscription-improvements
 RUN mvn install -DskipTests
 
 WORKDIR /tmp
-RUN git clone https://github.com/hapifhir/hapi-fhir-jpaserver-starter
-
+RUN git clone https://github.com/lantanagroup/hapi-fhir-jpaserver-starter
 WORKDIR /tmp/hapi-fhir-jpaserver-starter
-RUN mvn install:install-file -Dfile=/tmp/hapi-fhir/hapi-fhir-jpaserver-subscription/target/hapi-fhir-jpaserver-subscription-3.8.0.jar -DskipTests
-RUN mvn install:install-file -Dfile=/tmp/hapi-fhir/hapi-fhir-jpaserver-base/target/hapi-fhir-jpaserver-base-3.8.0.jar -DskipTests
+RUN git checkout default-email-subject
 RUN mvn install -DskipTests
 
 FROM tomcat:9-jre8
