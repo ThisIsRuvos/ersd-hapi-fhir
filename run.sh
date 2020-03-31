@@ -30,6 +30,8 @@ sed -i '/^email.enabled/c\email.enabled='$EMAIL_ENABLED WEB-INF/classes/hapi.pro
 sed -i '/^email.from/c\email.from='$EMAIL_FROM WEB-INF/classes/hapi.properties
 sed -i '/^email.host/c\email.host='$EMAIL_HOST WEB-INF/classes/hapi.properties
 sed -i '/^email.port/c\email.port='$EMAIL_PORT WEB-INF/classes/hapi.properties
+sed -i '/^email.username/c\email.username='$EMAIL_USERNAME WEB-INF/classes/hapi.properties
+sed -i '/^email.password/c\email.password='$EMAIL_PASSWORD WEB-INF/classes/hapi.properties
 
 zip -r webapps/hapi-fhir-jpaserver.war WEB-INF/classes/hapi.properties
 
