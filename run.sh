@@ -13,6 +13,7 @@ HIBERNATE_INDEX_BASE=${HIBERNATE_INDEX_BASE:-'/data/hapi_dstu3/lucenefiles'}
 RESTHOOK_ENABLED=${RESTHOOK_ENABLED:-'true'}
 EMAIL_ENABLED=${EMAIL_ENABLED:-'true'}
 EMAIL_FROM=${EMAIL_FROM:-'sandboxsupport@aimsplatform.com'}
+EMAIL_SUBJECT=${EMAIL_SUBJECT:-'Electronic Case Reporting Update Notification'}
 EMAIL_HOST=${EMAIL_HOST:-'aws-smtp-relay'}
 EMAIL_PORT=${EMAIL_PORT:-'10025'}
 
@@ -28,6 +29,7 @@ sed -i '/^subscription.resthook/c\subscription.resthook.enabled='$RESTHOOK_ENABL
 sed -i '/^subscription.email.enabled/c\subscription.email.enabled='$EMAIL_ENABLED WEB-INF/classes/hapi.properties
 sed -i '/^email.enabled/c\email.enabled='$EMAIL_ENABLED WEB-INF/classes/hapi.properties
 sed -i '/^email.from/c\email.from='$EMAIL_FROM WEB-INF/classes/hapi.properties
+sed -i '/^email.defaultSubject/c\email.defaultSubject='$EMAIL_SUBJECT WEB-INF/classes/hapi.properties
 sed -i '/^email.host/c\email.host='$EMAIL_HOST WEB-INF/classes/hapi.properties
 sed -i '/^email.port/c\email.port='$EMAIL_PORT WEB-INF/classes/hapi.properties
 sed -i '/^email.username/c\email.username='$EMAIL_USERNAME WEB-INF/classes/hapi.properties
